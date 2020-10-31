@@ -1,0 +1,10 @@
+{% extends "bboard/base.html" %}
+
+{% block content %}
+    {% for ad in ads %}
+        <h1>{{ad.name}}</h1>
+        <p> Длина: {{ad.length}} см</p>
+        <p> Цена: {{ad.price}} грн</p>
+        {{ad.image}}
+    {% endfor %}
+{% endblock content %}
