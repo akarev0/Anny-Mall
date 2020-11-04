@@ -1,31 +1,28 @@
 from typing import Dict
-
+from django.views.generic import ListView
 from django.shortcuts import render
 
-ads = [
-    {
-        "name": "Платье синее",
-        "length": "128",
-        "price": "90",
-        "brand": None,
-        "image": "picture_1"
-    },
-    {
-        "name": "Свитшот новый",
-        "length": "128",
-        "price": "350",
-        "brand": "",
-        "image": "picture_2"
-    }
-]
+from .models import Item
 
 
 def home_page(request):
+    ads: Item = Item.objects.all()
     context: Dict = {
         "ads": ads
     }
     return render(request=request, template_name="bboard/home_page.html", context=context)
 
 
+class AdListView(ListView):
+	model = Item
+	template_name = "bboard/home_page.html"
+	context_object_name = "ads"
+	ordering = ["-published"]
+
+
+
 def about_page(request):
     return render(request, "bboard/about_us.html")
+
+def create_new_ad(request) -> None:
+	pass
