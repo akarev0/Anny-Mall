@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse 
 
 class Item(models.Model):
     name = models.CharField(max_length=80, verbose_name="Вещь")
@@ -14,6 +14,9 @@ class Item(models.Model):
         verbose_name_plural = "Вещи"
         verbose_name = "Вещь"
         ordering = ["-published"]
+
+    def get_absolute_url(self):
+        return reverse('ad-detail', kwargs={'pk': self.pk})
 
 
 class Rubric(models.Model):
