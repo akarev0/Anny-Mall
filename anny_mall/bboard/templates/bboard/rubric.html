@@ -1,6 +1,7 @@
 {% extends "bboard/base.html" %}
 
 {% block content %}
+    <h1 class="mb-3"> Товары в категории: {{ view.kwargs.rubric }} ({{ page_obj.paginator.count }}) </h1>
     {% for ad in ads %}
     <article class="media content-section">
 		<div class="media-body">
@@ -13,7 +14,7 @@
 		    	<h2><a class="article-title" href="{% url 'ad-detail' ad.id %}">{{ ad.name }}</a></h2>
 		        <p> Длина: {{ ad.length }} см</p>
 		        <p> Цена: {{ ad.price }} грн</p>
-		        <p> Категория: <a href="{% url 'rubric-ads' ad.rubric %}">{{ ad.rubric }}</a></p>
+		        <p> Категория: <a href="#">{{ ad.rubric }}</a></p>
 		    </div>
 	        <div class="col-md-4">
 	        	<img class="media" width="200px" height="150px" src="{{ ad.image.url }}">

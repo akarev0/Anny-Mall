@@ -6,17 +6,9 @@ from django.views.generic import (
 	UpdateView,
 	DeleteView
 )
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from .models import Item
-
-
-def home_page(request):
-    ads: Item = Item.objects.all()
-    context: Dict = {
-        "ads": ads
-    }
-    return render(request=request, template_name="bboard/home_page.html", context=context)
+from .models import Item, Rubric
 
 
 class AdListView(ListView):
@@ -24,6 +16,20 @@ class AdListView(ListView):
 	template_name = "bboard/home_page.html"
 	context_object_name = "ads"
 	ordering = ["-published"]
+	paginate_by = 3
+
+
+class ByRubricListView(ListView):
+	model = Item
+	template_name = "bboard/rubric.html"
+	context_object_name = "ads"
+	ordering = ["-published"]
+	paginate_by = 3
+
+	def get_queryset(self):
+		ads = get_object_or_404(Rubric, name=self.kwargs.get("rubric"))
+		return Item.objects.filter(rubric=ads).order_by("-published")
+
 
 class AdDetailView(DetailView):
 	model = Item
