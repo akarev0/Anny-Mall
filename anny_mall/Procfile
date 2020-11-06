@@ -1,0 +1,1 @@
+web: gunicorn anny_mall.wsgi
