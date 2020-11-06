@@ -1,1 +1,1 @@
-web: gunicorn anny_mall.wsgi
+web: gunicorn Anny-Mall.wsgi
