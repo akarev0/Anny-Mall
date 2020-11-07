@@ -20,10 +20,11 @@
                 <p> Цена: {{ object.price }} грн</p>
                 <p> Категория: {{ object.rubric }} </p>
             </div>
+            <div class="mx-auto d-block rounded">
+                <img src="{{ object.image.url }}">
+            </div>
         </div>
-        <div class="displayed">
-            <img src="{{ object.image.url }}">
-        </div>
+
     </div>
 </article>
 {% endblock content %}
