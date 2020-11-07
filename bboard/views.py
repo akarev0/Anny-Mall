@@ -1,4 +1,5 @@
-from typing import Dict
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
     ListView,
     DetailView,
@@ -6,7 +7,6 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from django.shortcuts import render, get_object_or_404
 
 from .models import Item, Rubric
 
@@ -35,7 +35,7 @@ class AdDetailView(DetailView):
     model = Item
 
 
-class AdCreateView(CreateView):
+class AdCreateView(LoginRequiredMixin, CreateView):
     model = Item
     fields = [
         "name",
@@ -47,7 +47,7 @@ class AdCreateView(CreateView):
     ]
 
 
-class AdUpdateView(UpdateView):
+class AdUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     fields = [
         "name",
@@ -59,7 +59,7 @@ class AdUpdateView(UpdateView):
     ]
 
 
-class AdDeleteView(DeleteView):
+class AdDeleteView(LoginRequiredMixin, DeleteView):
     model = Item
     success_url = '/'
 

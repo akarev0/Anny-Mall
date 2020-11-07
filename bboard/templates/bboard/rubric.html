@@ -1,7 +1,7 @@
 {% extends "bboard/base.html" %}
 
 {% block content %}
-    <h1 class="mb-3"> Товары в категории: {{ view.kwargs.rubric }} ({{ page_obj.paginator.count }}) </h1>
+    <h2 class="mb-3"> Товары в категории: {{ view.kwargs.rubric }} ({{ page_obj.paginator.count }}) </h2>
     {% for ad in ads %}
     <article class="media content-section">
 		<div class="media-body">
