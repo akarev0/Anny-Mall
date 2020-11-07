@@ -5,13 +5,12 @@
     <article class="media content-section">
 		<div class="media-body">
     		<div class="article-metadata">
-		        <!-- <a class="mr-2" href="#">{{ ad.name }}</a> -->
 		        <small class="text-muted">Товар добавлен: {{ ad.published }}</small>
 		    </div>
 		    <div class="row">
 		    <div class="col-md-8">
 		    	<h2><a class="article-title" href="{% url 'ad-detail' ad.id %}">{{ ad.name }}</a></h2>
-		        <p> Длина: {{ ad.length }} см</p>
+		        <p> Размер: {{ ad.length }} см</p>
 		        <p> Цена: {{ ad.price }} грн</p>
 		        <p> Категория: <a href="{% url 'rubric-ads' ad.rubric %}">{{ ad.rubric }}</a></p>
 		    </div>
