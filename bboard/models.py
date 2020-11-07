@@ -1,5 +1,6 @@
 from django.db import models
-from django.urls import reverse 
+from django.urls import reverse
+
 
 class Item(models.Model):
     name = models.CharField(max_length=80, verbose_name="Вещь")
@@ -29,16 +30,3 @@ class Rubric(models.Model):
         verbose_name_plural = "Рубрики"
         verbose_name = "Рубрика"
         ordering = ["name"]
-
-
-# class Image(models.Model):
-#     ad = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
-#     title = models.ImageField(default="default.jpg", upload_to="media")
-
-#     def __str__(self):
-#         return f" {self.ad.name} image"
-
-#     class Meta:
-#         verbose_name_plural = "Фото"
-#         verbose_name = "Фото"
-#         ordering = ["title"]
