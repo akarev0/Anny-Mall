@@ -1,5 +1,9 @@
 {% extends "bboard/base.html" %}
 {% block content %}
+{% load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'bboard/detail.css' %}">
+
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
@@ -16,9 +20,9 @@
                 <p> Цена: {{ object.price }} грн</p>
                 <p> Категория: {{ object.rubric }} </p>
             </div>
-            <div>
-                <img class="media" src="{{ object.image.url }}">
-            </div>
+        </div>
+        <div class="displayed">
+            <img src="{{ object.image.url }}">
         </div>
     </div>
 </article>
