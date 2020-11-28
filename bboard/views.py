@@ -1,3 +1,4 @@
+import requests
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -10,6 +11,7 @@ from django.views.generic import (
 
 from anny_mall import settings
 from anny_mall.liqpay import LiqPay
+from anny_mall.settings import SUCCESS_STATUS
 from .mixins import CategoryDetailMixin, BasketMixin
 from .models import (
     Product,
@@ -167,10 +169,14 @@ class PayCallbackView(View):
         data = request.POST.get('data')
         signature = request.POST.get('signature')
         sign = liqpay.str_to_sign(settings.LIQPAY_PRIVATE_KEY + data + settings.LIQPAY_PRIVATE_KEY)
-        if sign == signature:
-            print('callback is valid')
         response = liqpay.decode_data_from_str(data)
-        print('callback data', response)
+        print(response)
+        if sign == signature:
+            response['status'] = SUCCESS_STATUS
+            print(response)
+            print(request.path)
+            requests.post(url=request.path, data=response)
+
         return HttpResponse()
 
 
