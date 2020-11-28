@@ -1,22 +1,25 @@
 from django.urls import path
 
 from .views import (
-    about_page,
-    AdListView,
-    AdDetailView,
-    AdCreateView,
-    AdUpdateView,
-    AdDeleteView,
-    ByRubricListView
+    ProductDetailView,
+    CategoryDetailView,
+    BaseView,
+    BasketView,
+    AddToBasketView,
+    DeleteFromBasketView,
+    CheckOutView,
+    AboutPage, MakeOrderView
 )
 
 urlpatterns = [
-    path("", AdListView.as_view(), name="home-page"),
-    path("ad/<str:rubric>", ByRubricListView.as_view(), name="rubric-ads"),
-    path("about/", about_page, name="about-page"),
-    path("ad/<int:pk>/", AdDetailView.as_view(), name="ad-detail"),
-    path("ad/<int:pk>/update/", AdUpdateView.as_view(), name="ad-update"),
-    path("ad/<int:pk>/delete/", AdDeleteView.as_view(), name="ad-delete"),
-    path("ad/new/", AdCreateView.as_view(), name="ad-create")
+    path("", BaseView.as_view(), name="home_page"),
+    path("about/", AboutPage.as_view(), name="about-page"),
+    path('products/<str:slug>/', ProductDetailView.as_view(), name='item_detail'),
+    path('category/<str:slug>/', CategoryDetailView.as_view(), name='category_detail'),
+    path('basket/', BasketView.as_view(), name='basket'),
+    path('add-to-basket/<str:slug>/', AddToBasketView.as_view(), name='add_to_basket'),
+    path('delete-from-basket/<str:slug>/', DeleteFromBasketView.as_view(), name='delete_from_basket'),
+    path('checkout/', CheckOutView.as_view(), name='checkout'),
+    path('make-order/', MakeOrderView.as_view(), name='order')
 
 ]

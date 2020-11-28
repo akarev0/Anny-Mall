@@ -1,0 +1,45 @@
+{% extends 'bboard/base.html' %}
+
+{% block content %}
+<h3 class="text-center mt-5 mb-5">Ваша корзина {% if not basket.products.count %} пуста {% endif%}</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Товар</th>
+        <th scope="col">Изображение</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Общая цена</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in basket.products.all %}
+    <tr>
+        <th scope="row">{{ item.product.title }}</th>
+        <td class="w-25"><img class="img-fluid" src="{{ item.product.image.url }}"></td>
+        <td>{{ item.product.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.total_cost }} UAH</td>
+        <td>
+            <a href="{% url 'delete_from_basket' slug=item.product.slug %}">
+                <button type="button" class="btn btn-outline-danger">Пожалуй нет</button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+        <tr>
+            <td colspan="2"></td>
+            <td>Всего</td>
+            <td>{{ basket.total_products_in_basket }}</td>
+            <td><strong>{{ basket.total_cost }} UAH</strong></td>
+            <td>
+            <a href="{% url 'checkout' %}">
+                <button type="button" class="btn btn-outline-success">Заказать</button>
+            </a>
+        </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock content %}

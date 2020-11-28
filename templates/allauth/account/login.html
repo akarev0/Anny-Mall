@@ -1,0 +1,53 @@
+{% extends "bboard/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="content-section">
+
+    <legend class="border-bottom mb-4">{% trans "Sign In" %}</legend>
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+        <div class="form-group">
+            <button class="btn btn-outline-success" type="submit">{% trans "Sign In" %}</button>
+        </div>
+    </form>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+        <p>Для авторизации на нашем сайте Вы
+            можете использоватесь следующие социальные сети:
+        </p>
+
+        <div class="socialaccount_ballot">
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+        </div>
+
+    {% else %}
+        <p>
+            {% blocktrans %}
+            If you have not created an account yet, then please
+            <a href="{{ signup_url }}">sign up</a> first.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+
+</div>
+{% endblock %}
