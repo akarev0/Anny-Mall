@@ -175,7 +175,7 @@ class PayCallbackView(View):
             response['status'] = SUCCESS_STATUS
             print(response)
             print(request.path)
-            requests.post(url=request.path, data=response)
+            requests.post(url='https://www.liqpay.ua/api/3/checkout ', data=response)
 
         return HttpResponse()
 
