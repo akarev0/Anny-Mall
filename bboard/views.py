@@ -153,7 +153,7 @@ class PayView(TemplateView):
             'order_id': order.id,
             'version': '3',
             'sandbox': 0,
-            'server_url': 'http://localhost:8000/pay-callback/',
+            'server_url': 'https://anny-mall.herokuapp.com/pay-callback/',
         }
         signature = liqpay.cnb_signature(params)
         data = liqpay.cnb_data(params)

@@ -6,10 +6,8 @@ from django.utils import timezone
 User = get_user_model()
 
 
-# def image_directory_path(instance, filename) -> str:
-#     return f'ad_images/{filename}'
 def image_directory_path(instance, filename) -> str:
-    return f'{filename}'
+    return f'ad_images/{filename}'
 
 
 class Category(models.Model):
