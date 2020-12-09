@@ -35,7 +35,12 @@ class BaseView(BasketMixin, View):
             'products': products,
             'basket': self.basket
         }
-        return render(request, "bboard/base.html", context=context)
+        response = render(request, "bboard/base.html", context=context)
+
+        if not request.user.is_authenticated:
+            response.set_cookie('session_key', self.session.session_key)
+
+        return response
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
@@ -74,13 +79,22 @@ class AddToBasketView(BasketMixin, View):
     def get(self, request, *args, **kwargs):
         product_slug = kwargs.get('slug')
         product = Product.objects.get(slug=product_slug)
-        basket_product, created = BasketProduct.objects.get_or_create(
-            user=self.basket.owner,
-            basket=self.basket,
-            product=product
-        )
+
+        if request.user.is_authenticated:
+            basket_product, created = BasketProduct.objects.get_or_create(
+                user=self.basket.owner,
+                basket=self.basket,
+                product=product
+            )
+        else:
+            basket_product, created = BasketProduct.objects.get_or_create(
+                session_id=self.basket.session_id,
+                basket=self.basket,
+                product=product
+            )
 
         self.basket.products.add(basket_product)
+
         refresh_basket(self.basket)
         return HttpResponseRedirect('/basket/')
 

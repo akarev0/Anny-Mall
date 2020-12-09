@@ -43,9 +43,10 @@ class Product(models.Model):
 
 
 class BasketProduct(models.Model):
-    user = models.ForeignKey('Customer', verbose_name="Покупатель", on_delete=models.CASCADE)
+    user = models.ForeignKey('Customer', verbose_name="Покупатель", on_delete=models.CASCADE, null=True)
+    session_id = models.CharField(max_length=100, null=True, blank=True)
     basket = models.ForeignKey("Basket", verbose_name="Корзина", on_delete=models.CASCADE,
-                               related_name='related_products')
+                               related_name='related_products', blank=True)
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     total_cost = models.DecimalField(default=0, max_digits=9, decimal_places=2, verbose_name="Общая стоимость заказа")
@@ -60,6 +61,7 @@ class BasketProduct(models.Model):
 
 class Basket(models.Model):
     owner = models.ForeignKey("Customer", verbose_name="Владелец", on_delete=models.CASCADE, null=True)
+    session_id = models.CharField(max_length=100, null=True, blank=True)
     products = models.ManyToManyField(BasketProduct, blank=True, related_name='related_basket')
     total_products_in_basket = models.PositiveIntegerField(default=0)
     total_cost = models.DecimalField(default=0, max_digits=9, decimal_places=2, verbose_name="Общая стоимость заказа")
